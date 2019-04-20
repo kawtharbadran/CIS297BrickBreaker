@@ -136,6 +136,7 @@
       <DependentUpon>Play.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriteSheet.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <Content Include="Assets\fasterBall.PNG" />
     <Content Include="Assets\fasterPaddle.PNG" />
     <Content Include="Assets\GameNameImage.PNG" />
+    <Content Include="Assets\iconSheet.PNG" />
     <Content Include="Assets\longerPaddle.PNG" />
     <Content Include="Assets\Purplemountains.jpg" />
     <Content Include="Assets\shorterPaddle.PNG" />
