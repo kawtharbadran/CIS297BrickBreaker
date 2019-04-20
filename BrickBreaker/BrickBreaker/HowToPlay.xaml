@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="BrickBreaker.HowToPlay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BrickBreaker"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <canvas:CanvasAnimatedControl x:Name="HowToPlayPage" FontSize="14" Loaded="HowToPlayPage_Loaded" RenderTransformOrigin="0.772,0.747" Margin="0,-6,0,6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Left" Margin="481,536,0,0" VerticalAlignment="Top" Height="46" Width="222" FontWeight="Bold" FontStyle="Normal" Foreground="White" Background="#FFBE00FF" Click="NextButton_Click" FontFamily="Segoe UI Emoji"/>
+        <Image x:Name="InstructionImage" HorizontalAlignment="Left" Height="510" Margin="55,40,0,0" VerticalAlignment="Top" Width="792" FocusVisualSecondaryBrush="{x:Null}" Source="Instructions/instructions1.PNG" RenderTransformOrigin="0.874,0.508" />
+        <Button Content="Button" HorizontalAlignment="Left" Margin="-275,494,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="BackButton" Content="Back to Main Menu" HorizontalAlignment="Left" Height="46" Margin="199,536,0,0" VerticalAlignment="Top" Width="202" Background="#FF00D8FF" FontWeight="Bold" Foreground="White" FontFamily="Segoe UI Emoji" Click="BackButton_Click_1"/>
+
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="Assets/Dark-background.jpg"/>
+        </Grid.Background>
+
+    </Grid>
+</Page>
