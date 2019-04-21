@@ -11,15 +11,17 @@ using Windows.Gaming.Input;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BrickBreaker
 {
     public interface IDrawable
     {
-        void DrawAsync(CanvasDrawingSession canvas);
+        void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteSource);
     }
 
     public interface ICollidable
@@ -53,11 +55,15 @@ namespace BrickBreaker
         private bool isPowerUpGoing;
         private Stopwatch powerUpTime;
         private int whichPowerUp;
+        private PowerupSprite powerupIcon;
 
         public int score;
+        private CanvasBitmap spriteSheet;
+        public CanvasBitmap SpriteSheet { get => spriteSheet; set => spriteSheet = value; }
 
-        public Pong()
+        public Pong(CanvasBitmap SpriteSheet)
         {
+            spriteSheet = SpriteSheet;
             drawables = new List<IDrawable>();
 
             ball = new Ball(100, 100, Colors.Gray);
@@ -72,13 +78,13 @@ namespace BrickBreaker
             ball.TravelingDownward = true;
             ball.TravelingLeftward = true;
 
-            var leftWall = new Wall(LEFT_EDGE, TOP_EDGE, LEFT_EDGE, BOTTOM_EDGE, Colors.White);
+            var leftWall = new Wall(LEFT_EDGE, TOP_EDGE, LEFT_EDGE, BOTTOM_EDGE, Colors.Transparent);
             drawables.Add(leftWall);
 
-            var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.White);
+            var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.Transparent);
             drawables.Add(rightWall);
 
-            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.Black);
+            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.Transparent);
             drawables.Add(topWall);
 
             PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE, 60, 10, Colors.White);
@@ -129,7 +135,6 @@ namespace BrickBreaker
                             colorStack.Pop();
                         }
                         drawables.Add(obstacle);
-
                     }
                     leftPoint += brickWidth;
                 }
@@ -146,7 +151,7 @@ namespace BrickBreaker
             PlayerPaddle.TravelingRightward = travelingRightward;
         }
 
-        public async Task<bool> UpdateAsync()
+        public bool Update()
         {
             bool bounced = false;
 
@@ -194,7 +199,6 @@ namespace BrickBreaker
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
-                            
                             if (brick != null)
                             {
                                 score += brick.score;
@@ -205,18 +209,18 @@ namespace BrickBreaker
                     }
                 }
 
-                 foreach (var brick in bricksToDestroy)
+                foreach (var brick in bricksToDestroy)
                 {
-                 if (isPowerUpGoing == false)
+                    if (isPowerUpGoing == false)
                     {
-                       
                         if ((brick as Brick).getExtraBall())
                         {
                             ExtraBallPowerup(false);
                             isPowerUpGoing = true;
                             powerUpTime.Restart();
                             whichPowerUp = 1;
-
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getWiderPaddle())
                         {
@@ -224,6 +228,8 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             powerUpTime.Restart();
                             whichPowerUp = 2;
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getFasterBall())
                         {
@@ -231,6 +237,8 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             powerUpTime.Restart();
                             whichPowerUp = 3;
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getShorterPaddle())
                         {
@@ -238,11 +246,11 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             powerUpTime.Restart();
                             whichPowerUp = 4;
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                     }
-                  
                     drawables.Remove(brick);
-                   
                 }
                 if (powerUpTime.ElapsedTicks > 10000)
                 {
@@ -273,24 +281,22 @@ namespace BrickBreaker
                     powerUpTime.Reset();
                 }
 
-                
                 ball.Update();
                 PlayerPaddle.Update();
-                gameOver = ball.Y < TOP_EDGE || ball.Y > BOTTOM_EDGE;
+                if (powerupIcon != null)
+                {
+                    powerupIcon.Update();
                 }
-            
-            else
-            {
+                gameOver = ball.Y < TOP_EDGE || ball.Y > BOTTOM_EDGE;
             }
-
             return bounced;
         }
 
-        public void DrawGame(CanvasDrawingSession canvas)
+        public void DrawGame(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteBatch)
         {
             foreach (var drawable in drawables)
             {
-                drawable.DrawAsync(canvas);
+                drawable.DrawAsync(canvas, iconSpriteBatch);
             }
         }
 
@@ -299,7 +305,6 @@ namespace BrickBreaker
             Random random = new Random();
             int rand = random.Next(0, 5);
             Color color = new Color();
-            //List<Colors> colorList = new List<Colors>;
             switch (rand)
             {
                 case 0:

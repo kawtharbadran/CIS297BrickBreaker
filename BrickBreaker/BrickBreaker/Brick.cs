@@ -80,7 +80,7 @@ namespace BrickBreaker
         {
             return shorterPaddle;
         }
-        public override void DrawAsync(CanvasDrawingSession canvas)
+        public override void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch batch)
         {
             canvas.DrawRectangle(X, Y, Width, Height, Color);
             Color secondColor;

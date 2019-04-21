@@ -135,6 +135,7 @@
     <Compile Include="Play.xaml.cs">
       <DependentUpon>Play.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PowerupSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="Wall.cs" />

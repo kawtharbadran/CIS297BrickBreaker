@@ -39,7 +39,7 @@ namespace BrickBreaker
             }
         }
 
-        public virtual void DrawAsync(CanvasDrawingSession canvas)
+        public virtual void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch batch)
         {
             canvas.DrawRoundedRectangle(X, Y, Width, Height,3,3, Color);
             Color secondColor;

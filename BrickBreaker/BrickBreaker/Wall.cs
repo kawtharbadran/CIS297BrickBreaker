@@ -23,7 +23,7 @@ namespace BrickBreaker
             Color = color;
         }
 
-        public void DrawAsync(CanvasDrawingSession canvas)
+        public void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch batch)
         {
             canvas.DrawLine(X0, Y0, X1, Y1, Color, WIDTH);
         }
