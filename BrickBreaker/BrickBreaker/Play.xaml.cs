@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
+using Windows.Media.Playback;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +28,7 @@ namespace BrickBreaker
     /// </summary>
     public sealed partial class Play : Page
     {
-        Pong pong;
+         Pong pong;
         public Play()
         {
             this.InitializeComponent();
@@ -34,6 +36,10 @@ namespace BrickBreaker
             pong = new Pong();
             Window.Current.CoreWindow.KeyDown += Canvas_KeyDown;
             Window.Current.CoreWindow.KeyUp += Canvas_KeyUp;
+            Uri newuri = new Uri("ms-appx:///Assets/mysound.wav");
+            myPlayer.Source = newuri;
+            myPlayer.Play();
+
         }
 
         private void Canvas_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
@@ -64,11 +70,20 @@ namespace BrickBreaker
         {
             pong.DrawGame(args.DrawingSession);
         }
-
-        private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
+        private async void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             pong.Update();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                ScoreBox.Text = pong.score.ToString();
+            });
+            
         }
+
+       /* private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
+        {
+            pong.Update();
+        }*/
 
         private void PlayPage_Loaded(object sender, RoutedEventArgs e)
         {

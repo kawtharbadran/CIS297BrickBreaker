@@ -50,6 +50,8 @@ namespace BrickBreaker
         private Stopwatch powerUpTime;
         private int whichPowerUp;
 
+        public int score;
+
         public Pong()
         {
             drawables = new List<IDrawable>();
@@ -78,6 +80,7 @@ namespace BrickBreaker
             PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE, 60, 10, Colors.White);
             drawables.Add(PlayerPaddle);
 
+            score = 0;
             gameOver = false;
 
             random = new Random();
@@ -196,11 +199,14 @@ namespace BrickBreaker
                         }
                     }
                 }
-                foreach (var brick in bricksToDestroy)
-                {
 
-                    if (isPowerUpGoing == false)
+                 foreach (var brick in bricksToDestroy)
+                {
+                    score += 1;
+
+                 if (isPowerUpGoing == false)
                     {
+                       
                         if ((brick as Brick).getExtraBall())
                         {
                             ExtraBallPowerup(false);
@@ -231,7 +237,9 @@ namespace BrickBreaker
                             whichPowerUp = 4;
                         }
                     }
+                  
                     drawables.Remove(brick);
+                   
                 }
                 if (powerUpTime.ElapsedTicks > 10000)
                 {
@@ -262,6 +270,7 @@ namespace BrickBreaker
                     powerUpTime.Reset();
                 }
 
+                
                 ball.Update();
                 PlayerPaddle.Update();
                 gameOver = ball.Y < TOP_EDGE || ball.Y > BOTTOM_EDGE;

@@ -154,6 +154,7 @@
     <Content Include="Assets\GameNameImage.PNG" />
     <Content Include="Assets\iconSheet.PNG" />
     <Content Include="Assets\longerPaddle.PNG" />
+    <Content Include="Assets\mysound.wav" />
     <Content Include="Assets\Purplemountains.jpg" />
     <Content Include="Assets\shorterPaddle.PNG" />
     <Content Include="Assets\slowerBall.PNG" />
