@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Gaming.Input;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -29,7 +31,9 @@ namespace BrickBreaker
     }
 
     public interface IDestroyable : ICollidable
-    { }
+    {
+        int score { get; set;}
+    }
 
     public class Pong
     {
@@ -142,7 +146,7 @@ namespace BrickBreaker
             PlayerPaddle.TravelingRightward = travelingRightward;
         }
 
-        public bool Update()
+        public async Task<bool> UpdateAsync()
         {
             bool bounced = false;
 
@@ -190,9 +194,10 @@ namespace BrickBreaker
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
-
+                            
                             if (brick != null)
                             {
+                                score += brick.score;
                                 bricksToDestroy.Add(brick as IDrawable);
                                 break;
                             }
@@ -202,8 +207,6 @@ namespace BrickBreaker
 
                  foreach (var brick in bricksToDestroy)
                 {
-                    score += 1;
-
                  if (isPowerUpGoing == false)
                     {
                        
@@ -278,7 +281,6 @@ namespace BrickBreaker
             
             else
             {
-                //game over here
             }
 
             return bounced;
@@ -341,7 +343,7 @@ namespace BrickBreaker
                 var newBall = new Ball(100, 100, Colors.Gray);
                 drawables.Add(newBall);
                 newBall.TravelingDownward = true;
-                newBall.TravelingLeftward = false;
+                newBall.TravelingLeftward = true;
             }
         }
 

@@ -13,10 +13,15 @@ namespace BrickBreaker
         private bool extraBall, widerPaddle;//Power-Ups
         private bool fasterBall, shorterPaddle;//downgrades
         private Random random;
+        int scoreValue;
+        public int score { get => scoreValue; set => score = scoreValue; }
+
         public Brick(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         {
             random = new Random();
             int rand = random.Next(0, 20);
+            Color = color;
+            scoreValue = 0;
 
             switch (rand)
             {
@@ -54,6 +59,7 @@ namespace BrickBreaker
                     }
                     break;
             }
+             
         }
         public bool getExtraBall()
         {
@@ -81,22 +87,27 @@ namespace BrickBreaker
             if (Color == Colors.Red)
             {
                 secondColor = Colors.LightPink;
+                scoreValue = 1;
             }
             else if (Color == Colors.DodgerBlue)
             {
                 secondColor = Colors.LightBlue;
+                scoreValue = 2;
             }
             else if (Color == Colors.Yellow)
             {
                 secondColor = Colors.LightYellow;
+                scoreValue = 3;
             }
             else if (Color == Colors.LimeGreen)
             {
                 secondColor = Colors.LightGreen;
+                scoreValue = 4;
             }
             else if (Color == Colors.Purple)
             {
                 secondColor = Colors.Orchid;
+                scoreValue = 5;
             }
             CanvasLinearGradientBrush gradientBrush = new CanvasLinearGradientBrush(canvas, secondColor, Color)
             {

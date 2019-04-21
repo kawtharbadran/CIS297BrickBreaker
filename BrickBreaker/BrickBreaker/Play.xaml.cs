@@ -28,7 +28,7 @@ namespace BrickBreaker
     /// </summary>
     public sealed partial class Play : Page
     {
-         Pong pong;
+        Pong pong;
         public Play()
         {
             this.InitializeComponent();
@@ -72,7 +72,7 @@ namespace BrickBreaker
         }
         private async void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
-            pong.Update();
+            pong.UpdateAsync();
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ScoreBox.Text = pong.score.ToString();
@@ -90,11 +90,12 @@ namespace BrickBreaker
 
         }
 
+        
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
 
             this.Frame.Navigate(typeof(MainPage));
         }
-
+        
     }
 }
