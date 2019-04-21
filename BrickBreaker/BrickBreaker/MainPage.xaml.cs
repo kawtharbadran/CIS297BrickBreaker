@@ -27,6 +27,10 @@ namespace BrickBreaker
         {
             this.InitializeComponent();
 
+            Uri newuri = new Uri("ms-appx:///Assets/mymusic.wav");
+            myMusicPlayer.Source = newuri;
+            myMusicPlayer.Play();
+
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
