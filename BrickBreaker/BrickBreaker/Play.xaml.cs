@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Windows.Media.Playback;
+using Windows.ApplicationModel.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,18 +29,17 @@ namespace BrickBreaker
     /// </summary>
     public sealed partial class Play : Page
     {
-        Pong pong;
+        public Pong pong;
+        private CanvasBitmap spriteSheet;
+
         public Play()
         {
             this.InitializeComponent();
-
-            pong = new Pong();
             Window.Current.CoreWindow.KeyDown += Canvas_KeyDown;
             Window.Current.CoreWindow.KeyUp += Canvas_KeyUp;
             Uri newuri = new Uri("ms-appx:///Assets/mysound.wav");
             myPlayer.Source = newuri;
             myPlayer.Play();
-
         }
 
         private void Canvas_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
@@ -68,16 +68,22 @@ namespace BrickBreaker
 
         private void Canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            pong.DrawGame(args.DrawingSession);
+            var spriteBatch = args.DrawingSession.CreateSpriteBatch();
+            pong.DrawGame(args.DrawingSession, spriteBatch);
+            spriteBatch.Dispose();
         }
+
         private async void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
-            pong.UpdateAsync();
+            pong.Update();
+            if (pong.gameOver)
+            {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(MainPage)); });
+            }
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ScoreBox.Text = pong.score.ToString();
             });
-            
         }
 
        /* private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -89,13 +95,21 @@ namespace BrickBreaker
         {
 
         }
-
         
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void PlayPage_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
 
-            this.Frame.Navigate(typeof(MainPage));
         }
-        
+
+        private void PlayPage_CreateResources_1(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
+        {
+            args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
+
+        }
+        private async Task CreateResourcesAsync(CanvasAnimatedControl sender)
+        {
+            spriteSheet = await CanvasBitmap.LoadAsync(sender, "Assets/iconSheet.PNG");
+            pong = new Pong(spriteSheet);
+        }
     }
 }

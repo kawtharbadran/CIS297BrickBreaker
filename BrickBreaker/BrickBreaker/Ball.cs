@@ -48,7 +48,7 @@ namespace BrickBreaker
             Color = Color.FromArgb(255, (byte)random.Next(0, 256), (byte)random.Next(0, 256), (byte)random.Next(0, 256));
         }
 
-        public void DrawAsync(CanvasDrawingSession canvas)
+        public void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteBatch)
         {
             canvas.DrawEllipse(X, Y, Radius, Radius, Colors.Orchid);
             canvas.FillEllipse(X, Y, Radius, Radius, Colors.LavenderBlush);
