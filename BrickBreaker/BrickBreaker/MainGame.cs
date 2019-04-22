@@ -40,7 +40,7 @@ namespace BrickBreaker
         public static int LEFT_EDGE = 10;
         public static int TOP_EDGE = 5;
         public static int RIGHT_EDGE = 790;
-        public static int BOTTOM_EDGE = 450;
+        public static int BOTTOM_EDGE = 530;
 
         private Random random;
 
@@ -81,7 +81,7 @@ namespace BrickBreaker
             var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.Black);
             drawables.Add(topWall);
 
-            PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE, 60, 10, Colors.White);
+            PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE - 20, 60, 10, Colors.White);
             drawables.Add(PlayerPaddle);
 
             score = 0;
@@ -158,6 +158,7 @@ namespace BrickBreaker
                 PlayerPaddle.Y += (int)(reading.LeftThumbstickY * -5);
             }
 
+
             if (!gameOver)
             {
                 List<IDrawable> bricksToDestroy = new List<IDrawable>();
@@ -202,10 +203,30 @@ namespace BrickBreaker
                                 break;
                             }
                         }
+
+                        //Trying to make paddle flip sides if pushed to the end of screen
+                        //Logic Does not work
+                        //START
+                        if (PlayerPaddle.X == RIGHT_EDGE)
+                        {
+                            PlayerPaddle.TravelingRightward = false;
+                            PlayerPaddle.TravelingLeftward = true;
+
+                            PlayerPaddle.X = LEFT_EDGE;
+                        }
+                        if (PlayerPaddle.X == LEFT_EDGE)
+                        {
+                            PlayerPaddle.TravelingLeftward = false;
+                            PlayerPaddle.TravelingRightward = true;
+                            PlayerPaddle.X = RIGHT_EDGE;
+                        }
+                        // END ----- 
                     }
+
+
                 }
 
-                 foreach (var brick in bricksToDestroy)
+                foreach (var brick in bricksToDestroy)
                 {
                  if (isPowerUpGoing == false)
                     {
