@@ -19,7 +19,7 @@ namespace BrickBreaker
         public Brick(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         {
             random = new Random();
-            int rand = random.Next(0, 20);
+            int rand = random.Next(0, 12);
             Color = color;
             scoreValue = 0;
 
@@ -34,7 +34,7 @@ namespace BrickBreaker
                     }
                     break;
 
-                case 4://faster ball downgrade
+                case 3://faster ball downgrade
                     {
                         extraBall = false;
                         widerPaddle = false;
@@ -42,7 +42,7 @@ namespace BrickBreaker
                         shorterPaddle = false;
                     }
                     break;
-                case 9://wider paddle upgrade
+                case 7://wider paddle upgrade
                     {
                         extraBall = false;
                         widerPaddle = true;
@@ -50,7 +50,7 @@ namespace BrickBreaker
                         shorterPaddle = false;
                     }
                     break;
-                case 14://shorter paddle downgrade
+                case 11://shorter paddle downgrade
                     {
                         extraBall = false;
                         widerPaddle = false;
