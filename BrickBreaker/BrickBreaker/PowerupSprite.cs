@@ -8,7 +8,7 @@ using Windows.Foundation;
 
 namespace BrickBreaker
 {
-    class PowerupSprite:IDestroyable,IDrawable
+    class PowerupSprite:/*IDestroyable,*/IDrawable
     {
         private Pong pong;
         private Rect iconSpriteSource;
@@ -45,8 +45,6 @@ namespace BrickBreaker
             }
         }
 
-        public int score { get => score; set => score = 0; }
-
         public bool CollidesLeftEdge(int x, int y)
         {
             return x >= X && x <= X + Width && y >= Y && y <= Y + Height;
@@ -69,7 +67,7 @@ namespace BrickBreaker
 
         public void Update()
         {
-            Y += 1;
+            Y += 2;
         }
 
         public void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteBatch)

@@ -22,23 +22,23 @@ namespace BrickBreaker
             Color = color;
         }
 
-        public void Update()
+        public void Update(int speed)
         {
             if (TravelingDownward)
             {
-                Y += 2;
+                Y += speed;
             }
             else
             {
-                Y -= 2;
+                Y -= speed;
             }
             if (TravelingLeftward)
             {
-                X -= 2;
+                X -= speed;
             }
             else
             {
-                X += 2;
+                X += speed;
             }
         }
 

@@ -253,8 +253,8 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 1;
-                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            //drawables.Add(powerupIcon);
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getWiderPaddle())
                         {
@@ -262,17 +262,16 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 2;
-                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            //drawables.Add(powerupIcon);
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getFasterBall())
                         {
-                            FasterBallDowngrade(false);
                             isPowerUpGoing = true;
                             currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 3;
-                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            //drawables.Add(powerupIcon);
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getShorterPaddle())
                         {
@@ -280,8 +279,8 @@ namespace BrickBreaker
                             isPowerUpGoing = true;
                             currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 4;
-                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            //drawables.Add(powerupIcon);
+                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            drawables.Add(powerupIcon);
                         }
                     }
                     drawables.Remove(brick);
@@ -302,11 +301,6 @@ namespace BrickBreaker
                                 WiderPaddlePowerup(true);
                             }
                             break;
-                        case 3:
-                            {
-                                FasterBallDowngrade(true);
-                            }
-                            break;
                         case 4:
                             {
                                 ShorterPaddleDowngrade(true);
@@ -317,16 +311,34 @@ namespace BrickBreaker
                     isPowerUpGoing = false;
                 }
 
-                ball.Update();
+                if (isPowerUpGoing && whichPowerUp == 3)
+                {
+                    ball.Update(3);
+                }
+                else ball.Update(2);
+
                 PlayerPaddle.Update();
 
                 if (isPowerUpGoing && whichPowerUp == 1)
                 {
-                    extraBall.Update();
+                    if (extraBall.Y < BOTTOM_EDGE)
+                    {
+                        extraBall.Update(2);
+                    }
+                    else
+                    {
+                        drawables.Remove(extraBall);
+                    }
+                    
                 }
+
                 if (powerupIcon != null)
                 {
-                    powerupIcon.Update();
+                    if (powerupIcon.Y < BOTTOM_EDGE)
+                    {
+                        powerupIcon.Update();
+                    }
+                    else drawables.Remove(powerupIcon);
                 }
 
                 gameOver = ball.Y > BOTTOM_EDGE;
@@ -391,18 +403,6 @@ namespace BrickBreaker
         }
 
         public void WiderPaddlePowerup(bool running)
-        {
-            if (running)
-            {
-                //end
-            }
-            else
-            {
-                //start
-            }
-        }
-
-        public void FasterBallDowngrade(bool running)
         {
             if (running)
             {
