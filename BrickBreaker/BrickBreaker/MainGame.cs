@@ -406,22 +406,26 @@ namespace BrickBreaker
         {
             if (running)
             {
-                //end
+                PlayerPaddle.Width = 60;
+                PlayerPaddle.Color = Colors.White;
             }
             else
             {
-                //start
+                PlayerPaddle.Width = 100;
+                PlayerPaddle.Color = Colors.Green;
             }
         }
         public void ShorterPaddleDowngrade(bool running)
         {
             if (running)
             {
-                //end
+                PlayerPaddle.Width = 60;
+                PlayerPaddle.Color = Colors.White;
             }
             else
             {
-                //start
+                PlayerPaddle.Width = 30;
+                PlayerPaddle.Color = Colors.Red;
             }
         }
 
