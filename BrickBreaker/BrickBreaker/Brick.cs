@@ -19,7 +19,7 @@ namespace BrickBreaker
         public Brick(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         {
             random = new Random();
-            int rand = random.Next(0, 20);
+            int rand = random.Next(0, 1);//Change back to 0, 20
             Color = color;
             scoreValue = 0;
 

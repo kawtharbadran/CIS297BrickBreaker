@@ -46,7 +46,7 @@ namespace BrickBreaker
 
         private Random random;
 
-        private Ball ball;
+        private Ball ball, extraBall;
         private Paddle PlayerPaddle;
         private List<IDrawable> drawables;
         public bool gameOver;
@@ -54,6 +54,7 @@ namespace BrickBreaker
 
         private bool isPowerUpGoing;
         private Stopwatch powerUpTime;
+        private TimeSpan currentTimeStamp;
         private int whichPowerUp;
         private PowerupSprite powerupIcon;
 
@@ -69,8 +70,13 @@ namespace BrickBreaker
             ball = new Ball(100, 100, Colors.Gray);
             drawables.Add(ball);
 
+            extraBall = new Ball(100, 100, Colors.Blue);
+            extraBall.TravelingDownward = true;
+            extraBall.TravelingLeftward = true;
+
             isPowerUpGoing = false;
-            powerUpTime = new Stopwatch();
+            powerUpTime = Stopwatch.StartNew();
+            currentTimeStamp = powerUpTime.Elapsed;
             whichPowerUp = 0;
 
             drawBricks();
@@ -177,12 +183,14 @@ namespace BrickBreaker
                             ball.TravelingDownward = !ball.TravelingDownward;
                             ball.ChangeColorRandomly();
                             bounced = true;
+
                         }
                         else if (colliable.CollidesTopEdge(ball.X, ball.Y + ball.Radius * 2))
                         {
                             ball.TravelingDownward = !ball.TravelingDownward;
                             ball.ChangeColorRandomly();
                             bounced = true;
+
                         }
                         else if (colliable.CollidesLeftEdge(ball.X, ball.Y))
                         {
@@ -195,6 +203,11 @@ namespace BrickBreaker
                             ball.TravelingLeftward = !ball.TravelingLeftward;
                             ball.ChangeColorRandomly();
                             bounced = true;
+                        }
+                        else if (isPowerUpGoing && whichPowerUp == 1)//Collision for extra ball
+                        {
+                            if (ExtraBallChangeDirection(colliable)) bounced = true;
+                            
                         }
 
                         if (bounced)
@@ -211,19 +224,19 @@ namespace BrickBreaker
                         //Trying to make paddle flip sides if pushed to the end of screen
                         //Logic Does not work
                         //START
-                        if (PlayerPaddle.X == RIGHT_EDGE)
-                        {
-                            PlayerPaddle.TravelingRightward = false;
-                            PlayerPaddle.TravelingLeftward = true;
+                        //if (PlayerPaddle.X == RIGHT_EDGE)
+                        //{
+                        //    PlayerPaddle.TravelingRightward = false;
+                        //    PlayerPaddle.TravelingLeftward = true;
 
-                            PlayerPaddle.X = LEFT_EDGE;
-                        }
-                        if (PlayerPaddle.X == LEFT_EDGE)
-                        {
-                            PlayerPaddle.TravelingLeftward = false;
-                            PlayerPaddle.TravelingRightward = true;
-                            PlayerPaddle.X = RIGHT_EDGE;
-                        }
+                        //    PlayerPaddle.X = LEFT_EDGE;
+                        //}
+                        //if (PlayerPaddle.X == LEFT_EDGE)
+                        //{
+                        //    PlayerPaddle.TravelingLeftward = false;
+                        //    PlayerPaddle.TravelingRightward = true;
+                        //    PlayerPaddle.X = RIGHT_EDGE;
+                        //}
                         // END ----- 
                     }
 
@@ -232,54 +245,56 @@ namespace BrickBreaker
 
                 foreach (var brick in bricksToDestroy)
                 {
-                    if (isPowerUpGoing == false)
+                    if (!isPowerUpGoing)
                     {
                         if ((brick as Brick).getExtraBall())
                         {
                             ExtraBallPowerup(false);
                             isPowerUpGoing = true;
-                            powerUpTime.Restart();
+                            currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 1;
-                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            drawables.Add(powerupIcon);
+                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            //drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getWiderPaddle())
                         {
                             WiderPaddlePowerup(false);
                             isPowerUpGoing = true;
-                            powerUpTime.Restart();
+                            currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 2;
-                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            drawables.Add(powerupIcon);
+                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            //drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getFasterBall())
                         {
                             FasterBallDowngrade(false);
                             isPowerUpGoing = true;
-                            powerUpTime.Restart();
+                            currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 3;
-                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            drawables.Add(powerupIcon);
+                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            //drawables.Add(powerupIcon);
                         }
                         else if ((brick as Brick).getShorterPaddle())
                         {
                             ShorterPaddleDowngrade(false);
                             isPowerUpGoing = true;
-                            powerUpTime.Restart();
+                            currentTimeStamp = powerUpTime.Elapsed;
                             whichPowerUp = 4;
-                            powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
-                            drawables.Add(powerupIcon);
+                            //powerupIcon = new PowerupSprite(this, whichPowerUp, (brick as Brick).X, (brick as Brick).Y);
+                            //drawables.Add(powerupIcon);
                         }
                     }
                     drawables.Remove(brick);
                 }
-                if (powerUpTime.ElapsedTicks > 10000)
+
+                if  (isPowerUpGoing && powerUpTime.Elapsed.TotalSeconds >= currentTimeStamp.TotalSeconds + 10)
                 {
                     switch (whichPowerUp)
                     {
                         case 1:
                             {
                                 ExtraBallPowerup(true);
+                                
                             }
                             break;
                         case 2:
@@ -299,16 +314,22 @@ namespace BrickBreaker
                             break;
                     }
 
-                    powerUpTime.Reset();
+                    isPowerUpGoing = false;
                 }
 
                 ball.Update();
                 PlayerPaddle.Update();
+
+                if (isPowerUpGoing && whichPowerUp == 1)
+                {
+                    extraBall.Update();
+                }
                 if (powerupIcon != null)
                 {
                     powerupIcon.Update();
                 }
-                gameOver = ball.Y < TOP_EDGE || ball.Y > BOTTOM_EDGE;
+
+                gameOver = ball.Y > BOTTOM_EDGE;
             }
             return bounced;
         }
@@ -361,15 +382,11 @@ namespace BrickBreaker
         {
             if (running)
             {
-                //end
+                drawables.Remove(extraBall);
             }
             else
             {
-                //start
-                var newBall = new Ball(100, 100, Colors.Gray);
-                drawables.Add(newBall);
-                newBall.TravelingDownward = true;
-                newBall.TravelingLeftward = true;
+                drawables.Add(extraBall);
             }
         }
 
@@ -406,6 +423,36 @@ namespace BrickBreaker
             {
                 //start
             }
+        }
+
+        public bool ExtraBallChangeDirection(ICollidable colliable)
+        {
+            if (colliable.CoolidesBottomEdge(extraBall.X, extraBall.Y))
+            {
+                extraBall.TravelingDownward = !extraBall.TravelingDownward;
+                extraBall.ChangeColorRandomly();
+                return true;
+            }
+            else if (colliable.CollidesTopEdge(extraBall.X, extraBall.Y + extraBall.Radius * 2))
+            {
+                extraBall.TravelingDownward = !extraBall.TravelingDownward;
+                extraBall.ChangeColorRandomly();
+                return true;
+            }
+            else if (colliable.CollidesLeftEdge(extraBall.X, extraBall.Y))
+            {
+                extraBall.TravelingLeftward = !extraBall.TravelingLeftward;
+                extraBall.ChangeColorRandomly();
+                return true;
+            }
+            else if (colliable.ColllidesRightEdge(extraBall.X + extraBall.Radius * 2, extraBall.Y))
+            {
+                extraBall.TravelingLeftward = !extraBall.TravelingLeftward;
+                extraBall.ChangeColorRandomly();
+                return true;
+     
+            }
+            return false;
         }
 
     }
