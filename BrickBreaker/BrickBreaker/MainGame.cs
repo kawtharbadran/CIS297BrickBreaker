@@ -177,7 +177,7 @@ namespace BrickBreaker
                 foreach (var drawable in drawables)
                 {
                     ICollidable colliable = drawable as ICollidable;
-                    if (colliable != null && (colliable is Wall|| colliable is Paddle))
+                    if (colliable != null )
                     {
                         if (colliable.CoolidesBottomEdge(ball.X, ball.Y))
                         {
@@ -205,21 +205,20 @@ namespace BrickBreaker
                             ball.ChangeColorRandomly();
                             bounced = true;
                         }
+                        else if (isPowerUpGoing && whichPowerUp == 1)//Collision for extra ball
+                        {
+                            if (ExtraBallChangeDirection(colliable)) { bounced = true; }
+                        }
                         if (isPowerUpGoing && (colliable is Paddle) && colliable.CollidesTopEdge(powerupIcon.X, powerupIcon.Y + 35))
                         {
                             powerupsCaught.Add(powerupIcon as IDrawable);
                             break;
                         }
-                        else if (isPowerUpGoing && whichPowerUp == 1)//Collision for extra ball
-                        {
-                            if (ExtraBallChangeDirection(colliable)) bounced = true;
-                            
-                        }
-
+                        
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
-                            if (brick != null)
+                            if (brick != null && brick is Brick)
                             {
                                 score += brick.score;
                                 bricksToDestroy.Add(brick as IDrawable);
@@ -230,23 +229,23 @@ namespace BrickBreaker
                         //Trying to make paddle flip sides if pushed to the end of screen
                         //Logic Does not work
                         //START
-                        //if (PlayerPaddle.X == RIGHT_EDGE)
-                        //{
-                        //    PlayerPaddle.TravelingRightward = false;
-                        //    PlayerPaddle.TravelingLeftward = true;
-
-                        //    PlayerPaddle.X = LEFT_EDGE;
-                        //}
-                        //if (PlayerPaddle.X == LEFT_EDGE)
-                        //{
-                        //    PlayerPaddle.TravelingLeftward = false;
-                        //    PlayerPaddle.TravelingRightward = true;
-                        //    PlayerPaddle.X = RIGHT_EDGE;
-                        //}
+                        /*
+                        if (PlayerPaddle.X+PlayerPaddle.Width == RIGHT_EDGE)
+                        {
+                            PlayerPaddle.TravelingRightward = false;
+                            PlayerPaddle.TravelingLeftward = true;
+                            PlayerPaddle.X = LEFT_EDGE;
+                        }
+                        if (PlayerPaddle.X == LEFT_EDGE)
+                        {
+                           PlayerPaddle.TravelingLeftward = false;
+                           PlayerPaddle.TravelingRightward = true;
+                           PlayerPaddle.X = RIGHT_EDGE;
+                        }
+                        */
                         // END ----- 
                     }
-
-
+                    
                 }
                 foreach (var brick in bricksToDestroy)
                 {
@@ -311,6 +310,7 @@ namespace BrickBreaker
                                 WiderPaddlePowerup(true);
                             }
                             break;
+                           
                         case 4:
                             {
                                 ShorterPaddleDowngrade(true);

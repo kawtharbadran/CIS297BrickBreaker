@@ -61,22 +61,23 @@ namespace BrickBreaker
 
         public bool CollidesLeftEdge(int x, int y)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool ColllidesRightEdge(int x, int y)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CollidesTopEdge(int x, int y)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CoolidesBottomEdge(int x, int y)
         {
-            throw new NotImplementedException();
+            return false;
+
         }
     }
 }
