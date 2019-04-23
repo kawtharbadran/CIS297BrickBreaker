@@ -11,15 +11,15 @@
 
     <Grid>
         <canvas:CanvasAnimatedControl x:Name="MainPage1" FontSize="14" Loaded="MainPage1_Loaded" RenderTransformOrigin="0.772,0.747" Margin="448,118,-448,-118" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   />
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="287,256,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="#FFFFC300" Click="PlayButton_Click" RenderTransformOrigin="1.145,0.76" FontWeight="Bold" FontFamily="Segoe UI Emoji" BorderBrush="#FF331980"/>
-        <Button x:Name="How_to_PlayBttn" Content="How to Play" HorizontalAlignment="Left" Margin="287,368,0,0" VerticalAlignment="Top" Height="49" Width="222" Foreground="White" Click="How_to_PlayBttn_Click" Background="#FF00A9FF" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
-        <Button x:Name="CreditsButton" Content="Credits" HorizontalAlignment="Left" Margin="288,311,0,0" VerticalAlignment="Top" Height="50" Width="222" FontWeight="Bold" FontStyle="Normal" Foreground="White" Background="#FFBE00FF" Click="CreditsButton_Click" FontFamily="Segoe UI Emoji" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="287,276,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="#FFFFC300" Click="PlayButton_Click" RenderTransformOrigin="1.145,0.76" FontWeight="Bold" FontFamily="Segoe UI Emoji" BorderBrush="#FF331980"/>
+        <Button x:Name="How_to_PlayBttn" Content="How to Play" HorizontalAlignment="Left" Margin="287,396,0,0" VerticalAlignment="Top" Height="49" Width="222" Foreground="White" Click="How_to_PlayBttn_Click" Background="#FF00A9FF" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
+        <Button x:Name="CreditsButton" Content="Credits" HorizontalAlignment="Left" Margin="288,335.25,0,0" VerticalAlignment="Top" Height="50" Width="222" FontWeight="Bold" FontStyle="Normal" Foreground="White" Background="#FFBE00FF" Click="CreditsButton_Click" FontFamily="Segoe UI Emoji" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Button.RenderTransform>
                 <CompositeTransform Rotation="0.05"/>
             </Button.RenderTransform>
         </Button>
-        <Image x:Name="GameNameImage" HorizontalAlignment="Left"  Height="216" Margin="191,15,0,0" VerticalAlignment="Top" Width="458" FocusVisualSecondaryBrush="{x:Null}" Source="Assets/GameNameImage.PNG" RenderTransformOrigin="0.874,0.508" />
-        <Button x:Name="ExitButton" Content="Quit" HorizontalAlignment="Left" Margin="288,422,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="Red" Click="ExitButton_Click" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
+        <Image x:Name="GameNameImage" HorizontalAlignment="Left"  Height="216" Margin="191,33,0,0" VerticalAlignment="Top" Width="458" FocusVisualSecondaryBrush="{x:Null}" Source="Assets/GameNameImage.PNG" RenderTransformOrigin="0.874,0.508" />
+        <Button x:Name="ExitButton" Content="Quit" HorizontalAlignment="Left" Margin="288,456,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="Red" Click="ExitButton_Click" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
         <MediaElement x:Name="myMusicPlayer" AutoPlay="True" />
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/background.jpg"/>

@@ -92,17 +92,17 @@ namespace BrickBreaker
             else if (Color == Colors.DodgerBlue)
             {
                 secondColor = Colors.LightBlue;
-                scoreValue = 2;
+                scoreValue = 4;
             }
             else if (Color == Colors.Yellow)
             {
                 secondColor = Colors.LightYellow;
-                scoreValue = 3;
+                scoreValue = 2;
             }
             else if (Color == Colors.LimeGreen)
             {
                 secondColor = Colors.LightGreen;
-                scoreValue = 4;
+                scoreValue = 3;
             }
             else if (Color == Colors.Purple)
             {

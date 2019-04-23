@@ -15,7 +15,7 @@
         <Image x:Name="InstructionImage" HorizontalAlignment="Left" Height="510" Margin="55,40,0,0" VerticalAlignment="Top" Width="735" FocusVisualSecondaryBrush="{x:Null}" Source="Instructions/instructions1.PNG" RenderTransformOrigin="0.874,0.508" />
         <Button Content="Button" HorizontalAlignment="Left" Margin="-275,494,0,0" VerticalAlignment="Top"/>
         <Button x:Name="BackButton" Content="Back to Main Menu" HorizontalAlignment="Left" Height="46" Margin="197,536,0,0" VerticalAlignment="Top" Width="202" Background="#FF00D8FF" FontWeight="Bold" Foreground="White" FontFamily="Segoe UI Emoji" Click="BackButton_Click_1"/>
-
+        <MediaElement x:Name="myPlayer" AutoPlay="True" />
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/Dark-background.jpg"/>
         </Grid.Background>

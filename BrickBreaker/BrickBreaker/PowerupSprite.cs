@@ -8,7 +8,7 @@ using Windows.Foundation;
 
 namespace BrickBreaker
 {
-    class PowerupSprite:IDestroyable,IDrawable
+    class PowerupSprite:IDrawable, IDestroyable
     {
         private Pong pong;
         private Rect iconSpriteSource;
@@ -46,26 +46,7 @@ namespace BrickBreaker
         }
 
         public int score { get => score; set => score = 0; }
-
-        public bool CollidesLeftEdge(int x, int y)
-        {
-            return x >= X && x <= X + Width && y >= Y && y <= Y + Height;
-        }
-
-        public bool ColllidesRightEdge(int x, int y)
-        {
-            return x >= X && x <= X + Width && y >= Y && y <= Y + Height;
-        }
-
-        public bool CollidesTopEdge(int x, int y)
-        {
-            return x >= X && x <= X + Width && y >= Y && y <= Y + Height;
-        }
-
-        public bool CoolidesBottomEdge(int x, int y)
-        {
-            return x >= X && x <= X + Width && y >= Y && y <= Y + Height;
-        }
+       
 
         public void Update()
         {
@@ -76,6 +57,26 @@ namespace BrickBreaker
         {
             iconSpriteBatch.DrawFromSpriteSheet(pong.SpriteSheet,
                         new Rect(X, Y, Width, Height), iconSpriteSource);
+        }
+
+        public bool CollidesLeftEdge(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ColllidesRightEdge(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CollidesTopEdge(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CoolidesBottomEdge(int x, int y)
+        {
+            throw new NotImplementedException();
         }
     }
 }

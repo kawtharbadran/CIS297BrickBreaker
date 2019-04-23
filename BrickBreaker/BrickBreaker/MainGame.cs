@@ -78,13 +78,13 @@ namespace BrickBreaker
             ball.TravelingDownward = true;
             ball.TravelingLeftward = true;
 
-            var leftWall = new Wall(LEFT_EDGE, TOP_EDGE, LEFT_EDGE, BOTTOM_EDGE, Colors.Transparent);
+            var leftWall = new Wall(LEFT_EDGE, TOP_EDGE, LEFT_EDGE, BOTTOM_EDGE, Colors.White);
             drawables.Add(leftWall);
 
-            var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.Transparent);
+            var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.White);
             drawables.Add(rightWall);
 
-            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.Transparent);
+            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.White);
             drawables.Add(topWall);
 
             PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE, 60, 10, Colors.White);
@@ -166,10 +166,11 @@ namespace BrickBreaker
             if (!gameOver)
             {
                 List<IDrawable> bricksToDestroy = new List<IDrawable>();
+                List<IDrawable> powerupsCaught = new List<IDrawable>();
                 foreach (var drawable in drawables)
                 {
                     ICollidable colliable = drawable as ICollidable;
-                    if (colliable != null)
+                    if (colliable != null && (colliable is Wall|| colliable is Paddle))
                     {
                         if (colliable.CoolidesBottomEdge(ball.X, ball.Y))
                         {
@@ -195,7 +196,11 @@ namespace BrickBreaker
                             ball.ChangeColorRandomly();
                             bounced = true;
                         }
-
+                        if (isPowerUpGoing && (colliable is Paddle) && colliable.CollidesTopEdge(powerupIcon.X, powerupIcon.Y + 35))
+                        {
+                            powerupsCaught.Add(powerupIcon as IDrawable);
+                            break;
+                        }
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
@@ -208,7 +213,6 @@ namespace BrickBreaker
                         }
                     }
                 }
-
                 foreach (var brick in bricksToDestroy)
                 {
                     if (isPowerUpGoing == false)
@@ -252,6 +256,10 @@ namespace BrickBreaker
                     }
                     drawables.Remove(brick);
                 }
+                foreach (var powerup in powerupsCaught)
+                {
+                    drawables.Remove(powerup);
+                }
                 if (powerUpTime.ElapsedTicks > 10000)
                 {
                     switch (whichPowerUp)
@@ -277,7 +285,6 @@ namespace BrickBreaker
                             }
                             break;
                     }
-
                     powerUpTime.Reset();
                 }
 
