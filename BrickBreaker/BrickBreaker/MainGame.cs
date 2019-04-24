@@ -203,7 +203,7 @@ namespace BrickBreaker
                             ball.ChangeColorRandomly();
                             bounced = true;
                         }
-                        else if (isPowerUpGoing && whichPowerUp == 1)//Collision for extra ball
+                        if (isPowerUpGoing && whichPowerUp == 1)//Collision for extra ball
                         {
                             if (ExtraBallChangeDirection(colliable)) { bounced = true; }
                         }
@@ -242,9 +242,7 @@ namespace BrickBreaker
                                 break;
                             }
                         }
-
                     }
-
                 }
                 foreach (var brick in bricksToDestroy)
                 {
@@ -316,6 +314,7 @@ namespace BrickBreaker
                             case 2:
                                 {
                                     WiderPaddlePowerup(true);
+                                   
                                 }
                                 break;
 

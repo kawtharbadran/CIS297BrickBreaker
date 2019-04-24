@@ -20,6 +20,7 @@ using Windows.UI.Core;
 using Windows.Media.Playback;
 using Windows.ApplicationModel.Core;
 using System.ComponentModel;
+using Windows.Gaming.Input;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,6 +33,7 @@ namespace BrickBreaker
     {
         public Pong pong;
         private CanvasBitmap spriteSheet;
+        private Gamepad controller;
 
         public Play()
         {
@@ -41,6 +43,7 @@ namespace BrickBreaker
             Uri newuri = new Uri("ms-appx:///Assets/mysound.wav");
             myPlayer.Source = newuri;
             myPlayer.Play();
+
         }
 
         private void Canvas_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
@@ -77,6 +80,16 @@ namespace BrickBreaker
         private async void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             pong.Update();
+
+            if (Gamepad.Gamepads.Count > 0)
+            {
+                controller = Gamepad.Gamepads.First();
+                var reading = controller.GetCurrentReading();
+                if (reading.Buttons.HasFlag(GamepadButtons.B))
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(MainPage)); });
+                }
+            }
             if (pong.gameOver)
             {
               await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
@@ -87,7 +100,7 @@ namespace BrickBreaker
             });
             if (pong.DrawableItemsCount <= 5)//if only walls, ball, and paddle are left, the game ends
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
             }
         }
 
