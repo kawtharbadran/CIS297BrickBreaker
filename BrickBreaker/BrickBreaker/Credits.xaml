@@ -9,6 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="Assets/Dark-background.jpg"/>
+        </Grid.Background>
+        <TextBlock x:Name="CreditsText" HorizontalAlignment="Left" Height="443" Margin="160,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="870" Foreground="White" FocusVisualPrimaryBrush="#4CDDC0C0" Text="" IsHitTestVisible="True" FontWeight="Bold" FontSize="11"/>
     </Grid>
 </Page>

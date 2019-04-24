@@ -51,6 +51,16 @@ namespace BrickBreaker
                 string nextImageString = Directory.GetCurrentDirectory() + @"/Instructions/instructions3.PNG";
                 InstructionImage.Source = new BitmapImage(new Uri(nextImageString));
             }
+            else if (instructionCount == 4)
+            {
+                string nextImageString = Directory.GetCurrentDirectory() + @"/Instructions/instructions4.PNG";
+                InstructionImage.Source = new BitmapImage(new Uri(nextImageString));
+            }
+            else if (instructionCount == 5)
+            {
+                string nextImageString = Directory.GetCurrentDirectory() + @"/Instructions/instructions5.PNG";
+                InstructionImage.Source = new BitmapImage(new Uri(nextImageString));
+            }
         }
 
 

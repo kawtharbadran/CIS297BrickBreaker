@@ -40,7 +40,7 @@ namespace BrickBreaker
     public class Pong
     {
         public static int LEFT_EDGE = 10;
-        public static int TOP_EDGE = 5;
+        public static int TOP_EDGE = 10;
         public static int RIGHT_EDGE = 790;
         public static int BOTTOM_EDGE = 530;
 
@@ -90,7 +90,7 @@ namespace BrickBreaker
             var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.White);
             drawables.Add(rightWall);
 
-            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.White);
+            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH-leftWall.X0, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.White);
             drawables.Add(topWall);
 
             PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE - 20, 60, 10, Colors.White);
@@ -169,7 +169,6 @@ namespace BrickBreaker
                 PlayerPaddle.Y += (int)(reading.LeftThumbstickY * -5);
             }
 
-
             if (!gameOver)
             {
                 List<IDrawable> bricksToDestroy = new List<IDrawable>();
@@ -177,21 +176,19 @@ namespace BrickBreaker
                 foreach (var drawable in drawables)
                 {
                     ICollidable colliable = drawable as ICollidable;
-                    if (colliable != null )
+                    if (colliable != null)
                     {
                         if (colliable.CoolidesBottomEdge(ball.X, ball.Y))
                         {
                             ball.TravelingDownward = !ball.TravelingDownward;
                             ball.ChangeColorRandomly();
                             bounced = true;
-
                         }
                         else if (colliable.CollidesTopEdge(ball.X, ball.Y + ball.Radius * 2))
                         {
                             ball.TravelingDownward = !ball.TravelingDownward;
                             ball.ChangeColorRandomly();
                             bounced = true;
-
                         }
                         else if (colliable.CollidesLeftEdge(ball.X, ball.Y))
                         {
@@ -209,12 +206,12 @@ namespace BrickBreaker
                         {
                             if (ExtraBallChangeDirection(colliable)) { bounced = true; }
                         }
-                        if (isPowerUpGoing && (colliable is Paddle) && colliable.CollidesTopEdge(powerupIcon.X, powerupIcon.Y + 35))
+                        if (isPowerUpGoing && (colliable is Paddle)&& !(colliable is Brick ) && colliable.CollidesTopEdge(powerupIcon.X, powerupIcon.Y + 35))
                         {
                             powerupsCaught.Add(powerupIcon as IDrawable);
                             break;
                         }
-                        
+
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
@@ -245,7 +242,7 @@ namespace BrickBreaker
                         */
                         // END ----- 
                     }
-                    
+
                 }
                 foreach (var brick in bricksToDestroy)
                 {
@@ -288,6 +285,10 @@ namespace BrickBreaker
                         }
                     }
                     drawables.Remove(brick);
+                    if (drawables.Count < 5) 
+                    {
+
+                    }
                 }
                 foreach (var powerup in powerupsCaught)
                 {
@@ -295,63 +296,63 @@ namespace BrickBreaker
                 }
                 if (powerUpTime.ElapsedTicks > 10000)
 
-                if  (isPowerUpGoing && powerUpTime.Elapsed.TotalSeconds >= currentTimeStamp.TotalSeconds + 10)
-                {
-                    switch (whichPowerUp)
+                
+                    if (isPowerUpGoing && powerUpTime.Elapsed.TotalSeconds >= currentTimeStamp.TotalSeconds + 10)
                     {
-                        case 1:
-                            {
-                                ExtraBallPowerup(true);
-                                
-                            }
-                            break;
-                        case 2:
-                            {
-                                WiderPaddlePowerup(true);
-                            }
-                            break;
-                           
-                        case 4:
-                            {
-                                ShorterPaddleDowngrade(true);
-                            }
-                            break;
+                        switch (whichPowerUp)
+                        {
+                            case 1:
+                                {
+                                    ExtraBallPowerup(true);
+
+                                }
+                                break;
+                            case 2:
+                                {
+                                    WiderPaddlePowerup(true);
+                                }
+                                break;
+
+                            case 4:
+                                {
+                                    ShorterPaddleDowngrade(true);
+                                }
+                                break;
+                        }
+                        powerUpTime.Reset();
+
+                        isPowerUpGoing = false;
                     }
-                    powerUpTime.Reset();
 
-                    isPowerUpGoing = false;
-                }
-
-                if (isPowerUpGoing && whichPowerUp == 3)
-                {
-                    ball.Update(3);
-                }
-                else ball.Update(2);
-
-                PlayerPaddle.Update();
-
-                if (isPowerUpGoing && whichPowerUp == 1)
-                {
-                    if (extraBall.Y < BOTTOM_EDGE)
+                    if (isPowerUpGoing && whichPowerUp == 3)
                     {
-                        extraBall.Update(2);
+                        ball.Update(4);
                     }
-                    else
-                    {
-                        drawables.Remove(extraBall);
-                    }
-                    
-                }
+                    else { ball.Update(3); }
 
-                if (powerupIcon != null)
-                {
-                    if (powerupIcon.Y < BOTTOM_EDGE)
-                    {
-                        powerupIcon.Update();
-                    }
-                    else drawables.Remove(powerupIcon);
-                }
+                    PlayerPaddle.Update();
 
+                    if (isPowerUpGoing && whichPowerUp == 1)
+                    {
+                        if (extraBall.Y < BOTTOM_EDGE)
+                        {
+                            extraBall.Update(3);
+                        }
+                        else
+                        {
+                            drawables.Remove(extraBall);
+                        }
+                    }
+
+                    if (powerupIcon != null)
+                    {
+                        if (powerupIcon.Y < BOTTOM_EDGE)
+                        {
+                            powerupIcon.Update();
+                        }
+                        else drawables.Remove(powerupIcon);
+                    }
+                
                 gameOver = ball.Y > BOTTOM_EDGE;
             }
             return bounced;
@@ -423,7 +424,7 @@ namespace BrickBreaker
             else
             {
                 PlayerPaddle.Width = 100;
-                PlayerPaddle.Color = Colors.Green;
+                PlayerPaddle.Color = Colors.LimeGreen;
             }
         }
         public void ShorterPaddleDowngrade(bool running)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Gaming.Input;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,10 +24,12 @@ namespace BrickBreaker
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private Gamepad gamepad = null;
+
         public MainPage()
         {
             this.InitializeComponent();
-
+            Windows.UI.ViewManagement.ApplicationViewScaling.TrySetDisableLayoutScaling(true);
             Uri newuri = new Uri("ms-appx:///Assets/mymusic.wav");
             myMusicPlayer.Source = newuri;
             myMusicPlayer.Play();
@@ -40,7 +43,7 @@ namespace BrickBreaker
 
         private void CreditsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(Credits));
         }
         private void How_to_PlayBttn_Click(object sender, RoutedEventArgs e)
         {
@@ -56,6 +59,10 @@ namespace BrickBreaker
 
         }
 
-
+        private void MainPage1_Unloaded(object sender, RoutedEventArgs e)
+        {
+            MainPage1.RemoveFromVisualTree();
+            MainPage1 = null;
+        }
     }
 }

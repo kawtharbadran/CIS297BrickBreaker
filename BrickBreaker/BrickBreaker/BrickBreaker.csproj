@@ -124,6 +124,9 @@
     <Compile Include="Credits.xaml.cs">
       <DependentUpon>Credits.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameOver.xaml.cs">
+      <DependentUpon>GameOver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HowToPlay.xaml.cs">
       <DependentUpon>HowToPlay.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,8 @@
     <Content Include="Instructions\instructions1.PNG" />
     <Content Include="Instructions\instructions2.PNG" />
     <Content Include="Instructions\instructions3.PNG" />
+    <Content Include="Instructions\instructions4.PNG" />
+    <Content Include="Instructions\instructions5.PNG" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -174,6 +179,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Credits.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameOver.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

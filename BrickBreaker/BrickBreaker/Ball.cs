@@ -14,7 +14,7 @@ namespace BrickBreaker
         public bool TravelingDownward { get; set; }
         public bool TravelingLeftward { get; set; }
 
-        public Ball(int x, int y, Color color, int radius = 7)
+        public Ball(int x, int y, Color color, int radius = 8)
         {
             X = x;
             Y = y;
@@ -50,7 +50,7 @@ namespace BrickBreaker
 
         public void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteBatch)
         {
-            canvas.DrawEllipse(X, Y, Radius, Radius, Colors.Black);
+            canvas.DrawEllipse(X, Y, Radius, Radius, Colors.White,2);
             canvas.FillEllipse(X, Y, Radius, Radius, Color);
         }
     }

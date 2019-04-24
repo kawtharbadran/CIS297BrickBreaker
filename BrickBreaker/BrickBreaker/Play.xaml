@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="PlayPage1">
-        <canvas:CanvasAnimatedControl x:Name="PlayPage" FontSize="14" Loaded="PlayPage_Loaded" CreateResources="PlayPage_CreateResources_1"  Margin="0,-6,0,6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Draw="Canvas_Draw" Update="Canvas_Update" />
+        <canvas:CanvasAnimatedControl x:Name="PlayPage" FontSize="14" Loaded="PlayPage_Loaded" Unloaded="PlayPage_Unloaded" CreateResources="PlayPage_CreateResources_1"  Margin="0,-6,0,6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Draw="Canvas_Draw" Update="Canvas_Update" />
         <TextBlock Text="Score: " HorizontalAlignment="Left" Margin="90,49,0,0" VerticalAlignment="Bottom" Height="37" Width="66" FontSize="24" Foreground="White"/>
         <TextBlock x:Name="ScoreBox" HorizontalAlignment="Left" Margin="159,49,0,0" VerticalAlignment="Bottom" Height="37" Width="100" FontSize="24" Foreground="White"/>
         <MediaElement x:Name="myPlayer" AutoPlay="True" />

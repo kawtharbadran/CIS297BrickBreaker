@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Windows.Media.Playback;
 using Windows.ApplicationModel.Core;
+using System.ComponentModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -78,7 +79,7 @@ namespace BrickBreaker
             pong.Update();
             if (pong.gameOver)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(MainPage)); });
+              await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
             }
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -110,6 +111,12 @@ namespace BrickBreaker
         {
             spriteSheet = await CanvasBitmap.LoadAsync(sender, "Assets/iconSheet.PNG");
             pong = new Pong(spriteSheet);
+        }
+
+        private void PlayPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            PlayPage.RemoveFromVisualTree();
+            PlayPage = null;
         }
     }
 }
