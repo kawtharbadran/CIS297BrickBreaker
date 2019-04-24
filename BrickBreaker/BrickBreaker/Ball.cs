@@ -50,7 +50,7 @@ namespace BrickBreaker
 
         public void DrawAsync(CanvasDrawingSession canvas, CanvasSpriteBatch iconSpriteBatch)
         {
-            canvas.DrawEllipse(X, Y, Radius, Radius, Colors.White,2);
+            canvas.DrawEllipse(X, Y, Radius, Radius, Colors.Black);
             canvas.FillEllipse(X, Y, Radius, Radius, Color);
         }
     }

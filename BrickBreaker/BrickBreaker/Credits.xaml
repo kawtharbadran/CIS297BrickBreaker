@@ -12,6 +12,7 @@
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="Assets/Dark-background.jpg"/>
         </Grid.Background>
-        <TextBlock x:Name="CreditsText" HorizontalAlignment="Left" Height="443" Margin="160,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="870" Foreground="White" FocusVisualPrimaryBrush="#4CDDC0C0" Text="" IsHitTestVisible="True" FontWeight="Bold" FontSize="11"/>
+        <Image HorizontalAlignment="Left" Height="489" Margin="69,50,0,0" VerticalAlignment="Top" Width="699" Source="Assets/credits.PNG"/>
+        <Button x:Name="BackButton" Content="Back to Main Menu" HorizontalAlignment="Left" Height="36" Margin="330,554,0,0" VerticalAlignment="Top" Width="167" FontWeight="Bold" FontSize="16" FontFamily="Segoe UI Emoji" Foreground="White" Background="#FF0ED37E" Click="BackButton_Click"/>
     </Grid>
 </Page>

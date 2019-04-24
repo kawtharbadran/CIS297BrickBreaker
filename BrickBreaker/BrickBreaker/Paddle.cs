@@ -29,6 +29,7 @@ namespace BrickBreaker
 
         public void Update()
         {
+           
             if (TravelingRightward)
             {
                 X += 3;

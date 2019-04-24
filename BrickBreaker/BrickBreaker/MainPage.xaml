@@ -11,9 +11,9 @@
 
     <Grid>
         <canvas:CanvasAnimatedControl x:Name="MainPage1" FontSize="14" Loaded="MainPage1_Loaded" Unloaded="MainPage1_Unloaded" RenderTransformOrigin="0.772,0.747" Margin="448,118,-448,-118" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   />
-        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="287,276,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="#FFFFC300" Click="PlayButton_Click" RenderTransformOrigin="1.145,0.76" FontWeight="Bold" FontFamily="Segoe UI Emoji" BorderBrush="#FF331980"/>
-        <Button x:Name="How_to_PlayBttn" Content="How to Play" HorizontalAlignment="Left" Margin="287,396,0,0" VerticalAlignment="Top" Height="49" Width="222" Foreground="White" Click="How_to_PlayBttn_Click" Background="#FF00A9FF" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
-        <Button x:Name="CreditsButton" Content="Credits" HorizontalAlignment="Left" Margin="288,335.25,0,0" VerticalAlignment="Top" Height="50" Width="222" FontWeight="Bold" FontStyle="Normal" Foreground="White" Background="#FFBE00FF" Click="CreditsButton_Click" FontFamily="Segoe UI Emoji" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+        <Button x:Name="PlayButton" Content="Play" HorizontalAlignment="Left" Margin="287,276,0,0" VerticalAlignment="Top" Height="50" Width="223" Foreground="White" Background="#FF0ED324" Click="PlayButton_Click" RenderTransformOrigin="1.145,0.76" FontWeight="Bold" FontFamily="Segoe UI Emoji" BorderBrush="#FF331980"/>
+        <Button x:Name="How_to_PlayBttn" Content="How to Play" HorizontalAlignment="Left" Margin="287,396,0,0" VerticalAlignment="Top" Height="49" Width="222" Foreground="White" Click="How_to_PlayBttn_Click" Background="#FFFFD300" FontWeight="Bold" FontFamily="Segoe UI Emoji"/>
+        <Button x:Name="CreditsButton" Content="Credits" HorizontalAlignment="Left" Margin="288,335.25,0,0" VerticalAlignment="Top" Height="50" Width="222" FontWeight="Bold" FontStyle="Normal" Foreground="White" Background="#FF00C1FF" Click="CreditsButton_Click" FontFamily="Segoe UI Emoji" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <Button.RenderTransform>
                 <CompositeTransform Rotation="0.05"/>
             </Button.RenderTransform>

@@ -24,16 +24,35 @@ namespace BrickBreaker
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Gamepad gamepad = null;
+        private Gamepad controller = null;
 
         public MainPage()
         {
             this.InitializeComponent();
-            Windows.UI.ViewManagement.ApplicationViewScaling.TrySetDisableLayoutScaling(true);
             Uri newuri = new Uri("ms-appx:///Assets/mymusic.wav");
             myMusicPlayer.Source = newuri;
             myMusicPlayer.Play();
-
+            if (Gamepad.Gamepads.Count > 0)
+            {
+                controller = Gamepad.Gamepads.First();
+                var reading = controller.GetCurrentReading();
+                if (reading.Buttons.HasFlag(GamepadButtons.A))
+                {
+                    this.Frame.Navigate(typeof(Play));
+                }
+                else if (reading.Buttons.HasFlag(GamepadButtons.B))
+                {
+                    Application.Current.Exit();
+                }
+                else if (reading.Buttons.HasFlag(GamepadButtons.X))
+                {
+                    this.Frame.Navigate(typeof(Credits));
+                }
+                else if (reading.Buttons.HasFlag(GamepadButtons.Y))
+                {
+                    this.Frame.Navigate(typeof(HowToPlay));
+                }
+            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)

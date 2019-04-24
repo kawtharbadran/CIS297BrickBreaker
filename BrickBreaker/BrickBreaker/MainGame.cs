@@ -59,6 +59,7 @@ namespace BrickBreaker
         private PowerupSprite powerupIcon;
 
         public int score;
+        public int DrawableItemsCount;
         private CanvasBitmap spriteSheet;
         public CanvasBitmap SpriteSheet { get => spriteSheet; set => spriteSheet = value; }
 
@@ -90,12 +91,13 @@ namespace BrickBreaker
             var rightWall = new Wall(RIGHT_EDGE, TOP_EDGE, RIGHT_EDGE, BOTTOM_EDGE, Colors.White);
             drawables.Add(rightWall);
 
-            var topWall = new Wall(LEFT_EDGE - Wall.WIDTH-leftWall.X0, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.White);
+            var topWall = new Wall(LEFT_EDGE -Wall.WIDTH, TOP_EDGE, RIGHT_EDGE + Wall.WIDTH, TOP_EDGE, Colors.White);
             drawables.Add(topWall);
 
             PlayerPaddle = new Paddle(LEFT_EDGE + RIGHT_EDGE / 2, BOTTOM_EDGE - 20, 60, 10, Colors.White);
             drawables.Add(PlayerPaddle);
 
+            DrawableItemsCount = drawables.Count;
             score = 0;
             gameOver = false;
 
@@ -172,7 +174,6 @@ namespace BrickBreaker
             if (!gameOver)
             {
                 List<IDrawable> bricksToDestroy = new List<IDrawable>();
-                List<IDrawable> powerupsCaught = new List<IDrawable>();
                 foreach (var drawable in drawables)
                 {
                     ICollidable colliable = drawable as ICollidable;
@@ -206,12 +207,31 @@ namespace BrickBreaker
                         {
                             if (ExtraBallChangeDirection(colliable)) { bounced = true; }
                         }
+
+                        /*
                         if (isPowerUpGoing && (colliable is Paddle)&& !(colliable is Brick ) && colliable.CollidesTopEdge(powerupIcon.X, powerupIcon.Y + 35))
                         {
                             powerupsCaught.Add(powerupIcon as IDrawable);
                             break;
                         }
-
+                         Trying to make paddle flip sides if pushed to the end of screen
+                          Logic Does not work
+                          START
+                        if (PlayerPaddle.X + PlayerPaddle.Width == RIGHT_EDGE)
+                        {
+                            SetPaddleTravelingRightward(false);
+                           // PlayerPaddle.TravelingRightward = false;
+                            PlayerPaddle.TravelingLeftward = true;
+                            PlayerPaddle.X = LEFT_EDGE;
+                        }
+                        if (PlayerPaddle.X == LEFT_EDGE)
+                        {
+                            PlayerPaddle.TravelingLeftward = false;
+                            PlayerPaddle.TravelingRightward = true;
+                            PlayerPaddle.X = RIGHT_EDGE;
+                        }
+                        END
+                        */
                         if (bounced)
                         {
                             IDestroyable brick = colliable as IDestroyable;
@@ -223,24 +243,6 @@ namespace BrickBreaker
                             }
                         }
 
-                        //Trying to make paddle flip sides if pushed to the end of screen
-                        //Logic Does not work
-                        //START
-                        /*
-                        if (PlayerPaddle.X+PlayerPaddle.Width == RIGHT_EDGE)
-                        {
-                            PlayerPaddle.TravelingRightward = false;
-                            PlayerPaddle.TravelingLeftward = true;
-                            PlayerPaddle.X = LEFT_EDGE;
-                        }
-                        if (PlayerPaddle.X == LEFT_EDGE)
-                        {
-                           PlayerPaddle.TravelingLeftward = false;
-                           PlayerPaddle.TravelingRightward = true;
-                           PlayerPaddle.X = RIGHT_EDGE;
-                        }
-                        */
-                        // END ----- 
                     }
 
                 }
@@ -285,15 +287,19 @@ namespace BrickBreaker
                         }
                     }
                     drawables.Remove(brick);
-                    if (drawables.Count < 5) 
+                    DrawableItemsCount = drawables.Count;
+                    if (DrawableItemsCount <= 5) 
                     {
-
+                        ball.TravelingDownward = false;
+                        ball.TravelingLeftward = false;
                     }
                 }
+                /*
                 foreach (var powerup in powerupsCaught)
                 {
                     drawables.Remove(powerup);
                 }
+                */
                 if (powerUpTime.ElapsedTicks > 10000)
 
                 

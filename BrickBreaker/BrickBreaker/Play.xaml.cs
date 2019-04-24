@@ -79,12 +79,16 @@ namespace BrickBreaker
             pong.Update();
             if (pong.gameOver)
             {
-              await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
+              await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
             }
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ScoreBox.Text = pong.score.ToString();
             });
+            if (pong.DrawableItemsCount <= 5)//if only walls, ball, and paddle are left, the game ends
+            {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(GameOver)); });
+            }
         }
 
        /* private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -114,9 +118,10 @@ namespace BrickBreaker
         }
 
         private void PlayPage_Unloaded(object sender, RoutedEventArgs e)
-        {
+        {/*
             PlayPage.RemoveFromVisualTree();
             PlayPage = null;
+            */
         }
     }
 }

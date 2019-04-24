@@ -152,6 +152,7 @@
     <Content Include="Assets\abstract-background.jpg" />
     <Content Include="Assets\background.jpg" />
     <Content Include="Assets\blueMountain.jpg" />
+    <Content Include="Assets\credits.PNG" />
     <Content Include="Assets\Dark-background.jpg" />
     <Content Include="Assets\GameNameImage.PNG" />
     <Content Include="Assets\iconSheet.PNG" />

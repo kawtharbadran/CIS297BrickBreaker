@@ -14,7 +14,7 @@
         </Grid.Background>
         <TextBlock x:Name="GameOverText" HorizontalAlignment="Left" Margin="315,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="475" Height="132" SelectionChanged="TextBlock_SelectionChanged" FontWeight="Bold" Foreground="White" FontSize="36"><Run Text="Game Over! "/><LineBreak/></TextBlock>
         <MediaElement x:Name="myMusicPlayer" AutoPlay="True" />
-        <Button x:Name="BackButton" Content="Back to Main Menu" HorizontalAlignment="Left" Margin="334,427,0,0" VerticalAlignment="Top" Height="49" Width="162" Foreground="White" Background="#FFF01650" FontSize="16" FontWeight="Bold" Click="BackButton_Click"/>
+        <Button x:Name="BackButton" Content="Back to Main Menu" HorizontalAlignment="Left" Margin="334,427,0,0" VerticalAlignment="Top" Height="49" Width="181" Foreground="White" Background="#FFF01650" FontSize="16" FontWeight="Bold" Click="BackButton_Click"/>
         <Border BorderBrush="Black" HorizontalAlignment="Left" Height="100" Margin="438,482,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Page>
